@@ -410,7 +410,7 @@ if(menuBtns[2]) menuBtns[2].addEventListener('click', function(){
 
   function nextUpgradeCost(mult){
     // аккуратно: числа большие, но для игры пойдёт
-    return Math.floor(1 * Math.pow(2, mult - 1));
+    return Math.floor(0,01 * Math.pow(2, mult - 1));
   }
 
   function updateUpgradeButton(){
@@ -608,5 +608,6 @@ if (tg) {
 
 </body>
 </html>
+
 
 
