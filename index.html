@@ -603,36 +603,9 @@ if (tg) {
   // пример: каждые 10 секунд отправляем текущий результат
   setInterval(sendScoreToBot, 10000);
 }
-// === Кнопка "Рейтинг" ===
-const showLeaderboardBtn = document.getElementById('showLeaderboardBtn');
-const leaderboardBox = document.getElementById('leaderboardBox');
 
-// адрес твоего сервера (замени localhost на адрес, где запущен бот)
-const SERVER_URL = "http://localhost:5000/leaderboard";
-
-showLeaderboardBtn.addEventListener('click', async () => {
-  leaderboardBox.textContent = "Загрузка рейтинга...";
-  try {
-    const res = await fetch(SERVER_URL);
-    const data = await res.json();
-
-    if (!data.length) {
-      leaderboardBox.textContent = "Пока никто не играл 💤";
-      return;
-    }
-
-    let html = "<h3>🏆 Топ игроков 🏆</h3><ol style='text-align:left;'>";
-    data.forEach((p, i) => {
-      html += <li>${p.username || "Без имени"} — ${p.score} 🐷</li>;
-    });
-    html += "</ol>";
-    leaderboardBox.innerHTML = html;
-  } catch (e) {
-    leaderboardBox.textContent = "Ошибка загрузки рейтинга 😢";
-    console.error(e);
-  }
-});
 </script>
 
 </body>
 </html>
+
