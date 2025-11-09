@@ -1,34 +1,7 @@
 import asyncio, logging, json, sqlite3
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import WebAppInfo, KeyboardButton, ReplyKeyboardMarkup
-
-logging.basicConfig(level=logging.INFO)
-
-API_TOKEN = "7959768925:AAH-a1hbogM4dTe10OHTHjQX5zPjzj7g5DU"
-
-bot = Bot(API_TOKEN)
-dp = Dispatcher()
-
-# --- База данных ---
-conn = sqlite3.connect("leaderboard.db", check_same_thread=False)
-cursor = conn.cursor()
-cursor.execute("""CREATE TABLE IF NOT EXISTS leaderboard (
-    tg_id INTEGER PRIMARY KEY,
-    username TEXT,
-    score INTEGER DEFAULT 0
-)""")
-conn.commit()
-
-# --- /start ---
-@dp.message(Command("start"))
-async def start_cmd(message: types.Message):
-    username = message.from_user.username or message.from_user.first_name or "Игрок"
-    cursor.execute("INSERT OR IGNORE INTO leaderboard (tg_id, username) VALUES (?, ?)", (message.from_user.id, username))
-    conn.commit()
-
-    button = KeyboardButton(
-        text="🎮 Играть",
+f
         web_app=WebAppInfo(url="https://maksim-theta.vercel.app/")
     )
     keyboard = ReplyKeyboardMarkup(keyboard=[[button]], resize_keyboard=True)
@@ -74,4 +47,5 @@ async def main():
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
+
     asyncio.run(main())
