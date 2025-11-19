@@ -30,31 +30,30 @@
   html, body {
     height: 100%;
     margin: 0;
-
-    /* Возвращаем как было! */
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-
+    justify-content: center; /* центр по горизонтали */
+    align-items: flex-end;   /* вниз */
     background: url('background.jpg') no-repeat center bottom;
     background-size: cover;
-
     font-family: Arial, sans-serif;
     overflow: hidden;
     user-select: none;
   }
-}
-body, #character { touch-action: manipulation; }
 
-#gameWrap {
-  position: relative;
-  width: 90vw;
-  max-width: 400px;
-  height: 100vh;
-  text-align: center;
-  overflow: visible;
+  #gameWrap {
+    width: 90vw;
+    max-width: 400px;
+    height: 100vh;
+    text-align: center;
+    position: relative;
+    overflow: visible;
+    /* центрируем flex-children внутри, если нужно */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+  }
 }
-
 /* Счётчик */
 #counter {
   position: absolute;
@@ -362,15 +361,21 @@ body, #character { touch-action: manipulation; }
   var press = 'jmy.png';
 
   function createPlus(x,y,amount){
-    var el = document.createElement('div');
-    el.className = 'coin';
-    el.textContent = '+' + amount;
-    var rect = wrapper.getBoundingClientRect();
-    el.style.left = (x - rect.left + (Math.random()-0.5)*40) + 'px';
-    el.style.top = (y - rect.top + (Math.random()-0.5)*20) + 'px';
-    wrapper.appendChild(el);
-    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 800);
+  var el = document.createElement('div');
+  el.className = 'coin';
+  el.textContent = '+' + amount;
+
+  if(currentCharacter === 'demomaks'){
+    el.style.color = '#ff6600';
+    el.style.textShadow = '0 0 8px #ff9900, 0 0 16px #ff3300';
   }
+
+  var rect = wrapper.getBoundingClientRect();
+  el.style.left = (x - rect.left + (Math.random()-0.5)*40) + 'px';
+  el.style.top = (y - rect.top + (Math.random()-0.5)*20) + 'px';
+  wrapper.appendChild(el);
+  setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 800);
+}
 
   function doTap(x,y,times){
     if(!times || times < 1) times = 1;
@@ -550,10 +555,10 @@ if (currentCharacter === 'demomaks') {
 } else {
     cn.classList.remove("fire-counter", "fire-smoke");
     ct.classList.remove("fire-counter");
-}// -------------------------------------
-  
+}
 
     updateCounterPosition();
+    
   }
 
 
