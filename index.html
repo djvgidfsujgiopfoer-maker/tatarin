@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Тапай персонажа</title>
 <style>
+#counter img {
+  margin-left: 8px; /* маленький отступ между числом и монетой */
+}
 /* --- Поведение на телефонах (до 768px) --- */
 @media (max-width: 768px) {
   html, body {
@@ -16,7 +19,7 @@
     /* Фикс бага с фоном на телефонах */
     display: block;
 
-    background: url('background.jpg') no-repeat center center fixed;
+   background: url('background.jpg') no-repeat center center;
     background-size: cover !important;
 
     font-family: Arial, sans-serif;
@@ -55,6 +58,7 @@
   }
 }
 /* Счётчик */
+
 #counter {
   position: absolute;
   bottom: calc(160px + 34vh + 8px);
@@ -70,10 +74,10 @@
 }
 @media (max-width: 768px) {
   #counter {
-    bottom: calc(140px + 60vh + 8px);
+    bottom: calc(140px + 70vh + 8px);
   }
 }
-#counter img { height: clamp(100px,10vw,70px); width: auto; vertical-align: middle; }
+#counter img { height: clamp(80px,8vw,55px); width: auto; vertical-align: middle; }
 #counterNumber { font-weight: bold; font-size: clamp(20px,6vw,40px); color: #3c9c44; text-shadow:2px 2px 4px rgba(0,0,0,0.4); line-height:1; transform:translateY(-2px); }
 
 /* Персонаж */
@@ -226,6 +230,18 @@
   50% { transform: translateX(-50%) translateY(-12px) scale(1.2); opacity: 0.4; }
   100% { transform: translateX(-50%) translateY(0) scale(0.9); opacity: 0.7; }
 }
+
+/* 🌀 ВРАЩЕНИЕ МОНЕТЫ */
+.spin-coin {
+  animation: spinCoin 3s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes spinCoin {
+  0%   { transform: rotateY(0deg); }
+  50%  { transform: rotateY(180deg); }
+  100% { transform: rotateY(360deg); }
+}
 </style>
 </head>
 <body>
@@ -238,9 +254,9 @@
 
 <div id="gameWrap">
   <div id="counter">
-    <img src="govno.png" alt="Свинкойнов" id="counterText">
     <span id="counterNumber">0</span>
-  </div>
+    <img src="govno.png" alt="Свинкойнов" id="counterText">
+</div>
 
   <div id="rank">Ранг: Праскуриот 🤵🏿‍♂️</div>
   <div id="rank-popup" class="hidden">🎉 Новый ранг!</div>
@@ -420,36 +436,39 @@
     });
   });
   // ---- Главное меню ----
-  if(menuBtns[0]) menuBtns[0].addEventListener('click', function(){
-    upgradeScreen.style.display='flex';
-    upgradeScreen.classList.add('active');
-    airdropScreen.style.display='none';
-    wrapper.style.opacity=0;
-    counter.style.opacity=0;
+if(menuBtns[0]) menuBtns[0].addEventListener('click', function(){
+  // Вкладка Улучшения
+  upgradeScreen.style.display='flex';
+  upgradeScreen.classList.add('active');
+  airdropScreen.style.display='none';
+  wrapper.style.opacity=0;
+  counter.style.opacity=0;
 
-    document.getElementById('rank').style.display = 'none';
-    document.getElementById('rank-popup').style.display = 'none';
-  });
+  document.getElementById('rank').style.display = 'none';
+  document.getElementById('rank-popup').style.display = 'none';
+});
 
-  if(menuBtns[1]) menuBtns[1].addEventListener('click', function(){
-    upgradeScreen.style.display='none';
-    airdropScreen.style.display='none';
-    wrapper.style.opacity=1;
-    counter.style.opacity=1;
+if(menuBtns[1]) menuBtns[1].addEventListener('click', function(){
+  // Вкладка Майнинг
+  upgradeScreen.style.display='none';
+  airdropScreen.style.display='none';
+  wrapper.style.opacity=1;
+  counter.style.opacity=1;
 
-    document.getElementById('rank').style.display = 'block';
-    document.getElementById('rank-popup').style.display = 'block';
-  });
+  document.getElementById('rank').style.display = 'none';
+  document.getElementById('rank-popup').style.display = 'none';
+});
 
-  if(menuBtns[2]) menuBtns[2].addEventListener('click', function(){
-    airdropScreen.style.display='flex';
-    upgradeScreen.style.display='none';
-    wrapper.style.opacity=0;
-    counter.style.opacity=0;
+if(menuBtns[2]) menuBtns[2].addEventListener('click', function(){
+  // Вкладка AirDrop
+  airdropScreen.style.display='flex';
+  upgradeScreen.style.display='none';
+  wrapper.style.opacity=0;
+  counter.style.opacity=0;
 
-    document.getElementById('rank').style.display = 'none';
-    document.getElementById('rank-popup').style.display = 'none';
-  });
+  document.getElementById('rank').style.display = 'block';
+  document.getElementById('rank-popup').style.display = 'block';
+});
 
 
   // ---- Улучшения x1000 ----
@@ -504,14 +523,14 @@
     var isMobile = window.innerWidth < 768;
 
     if(currentCharacter === 'barsuk') {
-      counter.style.bottom = isMobile
-        ? 'calc(160px + 50vh + 8px)'
-        : 'calc(160px + 55vh + 8px)';
-    } else {
-      counter.style.bottom = isMobile
-        ? 'calc(140px + 36vh + 8px)'
-        : 'calc(140px + 34vh + 8px)';
-    }
+  counter.style.bottom = isMobile
+    ? 'calc(160px + 60vh + 8px)'   // ↑ было 50vh
+    : 'calc(160px + 60vh + 8px)';
+} else {
+  counter.style.bottom = isMobile
+    ? 'calc(140px + 46vh + 8px)'   // ↑ было 36vh
+    : 'calc(140px + 40vh + 8px)';
+}
   }
 
 
@@ -548,6 +567,8 @@ else {
     // ==== ОГНЕННЫЙ СЧЁТЧИК ТОЛЬКО ДЛЯ ДЕМОМАКС ====
 var cn = document.getElementById("counterNumber");
 var ct = document.getElementById("counterText");
+// вращение монеты всегда
+ct.classList.add("spin-coin");
 
 if (currentCharacter === 'demomaks') {
     cn.classList.add("fire-counter", "fire-smoke");
