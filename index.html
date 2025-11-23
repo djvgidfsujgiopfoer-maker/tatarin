@@ -289,7 +289,7 @@
   }
 }
 .fire-menu-btn {
-  background-color: #ff2200 !important; /* ярко-красный фон */
+  background-color: #c2321c !important; /* ярко-красный фон */
   color: #fff !important;               /* текст белый или огненный */
   box-shadow: 0 0 12px #ff4400, 0 0 25px #ff6600; /* эффект свечения */
 }
@@ -653,6 +653,15 @@ if(currentCharacter === 'demomaks'){
       localStorage.setItem('character', currentCharacter);
 
       updateCharacterView();
+      if(currentCharacter === 'demomaks'){
+    document.querySelectorAll('.upgrade-tab').forEach(tab=>{
+        tab.style.color = '#ffffff';
+    });
+} else {
+    document.querySelectorAll('.upgrade-tab').forEach(tab=>{
+        tab.style.color = '';
+    });
+}
       changeMusic(currentCharacter);
 
       var name = c.querySelector('p').textContent;
@@ -769,6 +778,7 @@ if (tg) {
 
   setInterval(sendScoreToBot, 10000);
 }
+
 </script>
 
 </body>
